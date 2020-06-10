@@ -44,10 +44,11 @@ class GameScene: SKScene {
         }
         lastUpdateTime = currentTime
         print("\(dt*1000) milliseconds since last update") // 16.6666
-        move(sprite: zombie,velocity: CGPoint(x: zombieMovePointsPerSec, y: 0))
+        //move(sprite: zombie,velocity: CGPoint(x: zombieMovePointsPerSec, y: 0))
+        move(sprite: zombie, velocity: velocity)
     }
     func move(sprite: SKSpriteNode, velocity: CGPoint) {
-         // 1
+         // 1 convert the offset vector into a unit vector,
         //Velocity is in points per second
          let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
          y: velocity.y * CGFloat(dt))
@@ -56,6 +57,35 @@ class GameScene: SKScene {
          sprite.position = CGPoint(
          x: sprite.position.x + amountToMove.x,
          y: sprite.position.y + amountToMove.y)
+        
     }
     
+    //subtract the zombie position from the tap position, you get a vector showing the offset amount
+    func moveZombieToward(location: CGPoint) {
+     let offset = CGPoint(x: location.x - zombie.position.x,y: location.y - zombie.position.y)
+        let length = sqrt(Double(offset.x * offset.x + offset.y * offset.y))
+        //length of the hypotenuse using pythogoras theorem
+        let direction = CGPoint(x: offset.x / CGFloat(length),y: offset.y / CGFloat(length))
+        velocity = CGPoint(x: direction.x * zombieMovePointsPerSec,y: direction.y * zombieMovePointsPerSec)
+    }
+    // The direction points where the zombie should go.
+    //length is zombieMovePointsPerSec
+    // 1 - This process of converting a vector into a unit vector is called normalizing a vector
+    func sceneTouched(touchLocation:CGPoint) {
+        moveZombieToward(location: touchLocation)
+    }
+    override func touchesBegan(_ touches: Set<UITouch>,with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        sceneTouched(touchLocation: touchLocation)
+    }
+    override func touchesMoved(_ touches: Set<UITouch>,with event: UIEvent?) {
+         guard let touch = touches.first else {
+            return
+         }
+         let touchLocation = touch.location(in: self)
+         sceneTouched(touchLocation: touchLocation)
+    }
 }
