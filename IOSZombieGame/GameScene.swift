@@ -13,6 +13,7 @@ class GameScene: SKScene {
     let zombie = SKSpriteNode(imageNamed: "zombie1")
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
+
     let zombieMovePointsPerSec: CGFloat = 480.0
     var velocity = CGPoint.zero
     let playableRect: CGRect
@@ -59,9 +60,10 @@ class GameScene: SKScene {
          y: velocity.y * CGFloat(dt))
          print("Amount to move: \(amountToMove)")
          // 2
-         sprite.position = CGPoint(
-         x: sprite.position.x + amountToMove.x,
-         y: sprite.position.y + amountToMove.y)
+         //sprite.position = CGPoint(
+         //x: sprite.position.x + amountToMove.x,
+         //y: sprite.position.y + amountToMove.y)
+        sprite.position += amountToMove
         
     }
     
