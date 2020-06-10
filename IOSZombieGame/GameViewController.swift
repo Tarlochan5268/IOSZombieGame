@@ -18,7 +18,7 @@ class GameViewController: UIViewController {
         let skView = self.view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
-        skView.ignoresSiblingOrder = true
+        skView.ignoresSiblingOrder = true // SpriteKit makes no guarantee as to the order in which a node draws its child nodes that share the same zPosition.
         scene.scaleMode = .aspectFill
         skView.presentScene(scene)
     }

@@ -13,6 +13,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
+        background.zPosition = -1 //SpriteKit will draw it before anything else you add to the scene,
         addChild(background)
         //background.position = CGPoint(x: size.width/2, y: size.height/2)
         //background.anchorPoint = CGPoint.zero
