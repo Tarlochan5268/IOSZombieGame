@@ -15,7 +15,8 @@ class GameScene: SKScene {
     var dt: TimeInterval = 0
     let zombieMovePointsPerSec: CGFloat = 480.0
     var velocity = CGPoint.zero
-    //let playableRect: CGRect = null
+    let playableRect: CGRect
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
@@ -33,6 +34,7 @@ class GameScene: SKScene {
         zombie.position = CGPoint(x:400,y:400)
         //zombie.setScale(2)
         addChild(zombie)
+        debugDrawPlayableArea()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -48,6 +50,7 @@ class GameScene: SKScene {
         //move(sprite: zombie,velocity: CGPoint(x: zombieMovePointsPerSec, y: 0))
         move(sprite: zombie, velocity: velocity)
         boundsCheckZombie()
+        rotate(sprite: zombie, direction: velocity)
     }
     func move(sprite: SKSpriteNode, velocity: CGPoint) {
          // 1 convert the offset vector into a unit vector,
@@ -93,9 +96,10 @@ class GameScene: SKScene {
     
     
     func boundsCheckZombie() {
-     let bottomLeft = CGPoint.zero
-     let topRight = CGPoint(x: size.width, y: size.height)
-
+     //let bottomLeft = CGPoint.zero
+     //let topRight = CGPoint(x: size.width, y: size.height)
+    let bottomLeft = CGPoint(x: 0, y: playableRect.minY) //debug
+    let topRight = CGPoint(x: size.width, y: playableRect.maxY) //debug
      if zombie.position.x <= bottomLeft.x {
      zombie.position.x = bottomLeft.x
      velocity.x = -velocity.x
@@ -112,5 +116,34 @@ class GameScene: SKScene {
      zombie.position.y = topRight.y
      velocity.y = -velocity.y
      }
+    }
+    
+    override init(size: CGSize) {
+     let maxAspectRatio:CGFloat = 16.0/9.0 // 1
+     let playableHeight = size.width / maxAspectRatio // 2
+     let playableMargin = (size.height-playableHeight)/2.0 // 3
+     playableRect = CGRect(x: 0, y: playableMargin,
+     width: size.width,
+     height: playableHeight) // 4
+     super.init(size: size) // 5
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+    }
+    
+    func debugDrawPlayableArea() {
+     let shape = SKShapeNode()
+     let path = CGMutablePath()
+     path.addRect(playableRect)
+     shape.path = path
+     shape.strokeColor = SKColor.red
+     shape.lineWidth = 4.0
+     addChild(shape)
+    }
+    
+    func rotate(sprite: SKSpriteNode, direction: CGPoint) {
+    sprite.zRotation = CGFloat(
+    atan2(Double(direction.y), Double(direction.x)))
     }
 }
