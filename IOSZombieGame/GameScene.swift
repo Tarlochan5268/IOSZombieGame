@@ -11,7 +11,16 @@ import GameplayKit
 
 class GameScene: SKScene {
     override func didMove(to view: SKView) {
-    backgroundColor = SKColor.black
+        backgroundColor = SKColor.black
+        let background = SKSpriteNode(imageNamed: "background1")
+        addChild(background)
+        //background.position = CGPoint(x: size.width/2, y: size.height/2)
+        //background.anchorPoint = CGPoint.zero
+        //background.position = CGPoint.zero // (0,0)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.position =  CGPoint(x: size.width/2, y: size.height/2)
+        //background.zRotation = CGFloat(M_PI) / 8  // will rotate the sprite
+        print("Size: \(background.size)") // size of sprite
     }
     
 }
