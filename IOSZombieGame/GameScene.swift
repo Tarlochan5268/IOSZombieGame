@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     let zombie = SKSpriteNode(imageNamed: "zombie1")
+    var lastUpdateTime: TimeInterval = 0
+    var dt: TimeInterval = 0
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
@@ -32,6 +34,14 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         zombie.position = CGPoint(x: zombie.position.x+8, y: zombie.position.y)
+        
+        if lastUpdateTime > 0 {
+            dt = currentTime - lastUpdateTime
+        } else {
+            dt = 0
+        }
+        lastUpdateTime = currentTime
+        print("\(dt*1000) milliseconds since last update") // 16.6666
     }
     
 }
