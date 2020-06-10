@@ -12,11 +12,12 @@ import GameplayKit
 class GameScene: SKScene {
     let zombie = SKSpriteNode(imageNamed: "zombie1")
     var lastUpdateTime: TimeInterval = 0
+    let zombieRotateRadiansPerSec:CGFloat = 4.0 * π
     var dt: TimeInterval = 0
-
     let zombieMovePointsPerSec: CGFloat = 480.0
     var velocity = CGPoint.zero
     let playableRect: CGRect
+    var lastTouchLocation : CGPoint? //@
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
@@ -40,6 +41,8 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         zombie.position = CGPoint(x: zombie.position.x+8, y: zombie.position.y)
+        //if((lastTouchLocation - zombie.position) <= zombieMovePointsPerSec*dt )
+        
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -49,10 +52,25 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         print("\(dt*1000) milliseconds since last update") // 16.6666
         //move(sprite: zombie,velocity: CGPoint(x: zombieMovePointsPerSec, y: 0))
-        move(sprite: zombie, velocity: velocity)
+        if let lastTouchLocation = lastTouchLocation
+        {
+            let diff = lastTouchLocation - zombie.position
+            if diff.length() <= zombieMovePointsPerSec * CGFloat(dt)
+            {
+                velocity = CGPoint.zero
+            }
+            else
+            {
+                move(sprite: zombie, velocity: velocity)
+                rotate(sprite: zombie, direction: velocity, rotateRadiansPerSec: zombieRotateRadiansPerSec)
+            }
+        }
+        //move(sprite: zombie, velocity: velocity)
         boundsCheckZombie()
-        rotate(sprite: zombie, direction: velocity)
+        //rotate(sprite: zombie, direction: velocity)
+        
     }
+    
     func move(sprite: SKSpriteNode, velocity: CGPoint) {
          // 1 convert the offset vector into a unit vector,
         //Velocity is in points per second
@@ -79,7 +97,10 @@ class GameScene: SKScene {
     //length is zombieMovePointsPerSec
     // 1 - This process of converting a vector into a unit vector is called normalizing a vector
     func sceneTouched(touchLocation:CGPoint) {
+        lastTouchLocation = touchLocation //@
         moveZombieToward(location: touchLocation)
+        
+    
     }
     override func touchesBegan(_ touches: Set<UITouch>,with event: UIEvent?) {
         guard let touch = touches.first else {
@@ -124,10 +145,9 @@ class GameScene: SKScene {
      let maxAspectRatio:CGFloat = 16.0/9.0 // 1
      let playableHeight = size.width / maxAspectRatio // 2
      let playableMargin = (size.height-playableHeight)/2.0 // 3
-     playableRect = CGRect(x: 0, y: playableMargin,
-     width: size.width,
-     height: playableHeight) // 4
-     super.init(size: size) // 5
+     playableRect = CGRect(x: 0, y: playableMargin,width: size.width,height: playableHeight)//4
+    //self.lastTouchLocation = CGPoint.init() //@
+    super.init(size: size) // 5
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -147,5 +167,11 @@ class GameScene: SKScene {
     func rotate(sprite: SKSpriteNode, direction: CGPoint) {
     sprite.zRotation = CGFloat(
     atan2(Double(direction.y), Double(direction.x)))
+    }
+    
+    func rotate(sprite: SKSpriteNode, direction: CGPoint,rotateRadiansPerSec: CGFloat) {
+        let shortest = shortestAngleBetween(angle1: sprite.zRotation, angle2: velocity.angle)
+        let amountToRotate = min(rotateRadiansPerSec*CGFloat(dt),abs(shortest))
+        sprite.zRotation += shortest.sign() * amountToRotate
     }
 }
