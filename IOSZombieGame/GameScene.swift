@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    let zombie = SKSpriteNode(imageNamed: "zombie1")
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
@@ -23,9 +24,14 @@ class GameScene: SKScene {
         //background.zRotation = CGFloat(M_PI) / 8  // will rotate the sprite
         print("Size: \(background.size)") // size of sprite
         
-        let zombie = SKSpriteNode(imageNamed: "zombie1")
+        //let zombie = SKSpriteNode(imageNamed: "zombie1")
         zombie.position = CGPoint(x:400,y:400)
+        //zombie.setScale(2)
         addChild(zombie)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        zombie.position = CGPoint(x: zombie.position.x+8, y: zombie.position.y)
     }
     
 }
