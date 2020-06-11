@@ -38,7 +38,9 @@ class GameScene: SKScene {
         zombie.position = CGPoint(x:400,y:400)
         //zombie.setScale(2)
         addChild(zombie)
-        zombie.run(SKAction.repeatForever(zombieAnimation))//animation
+        //zombie.run(SKAction.repeatForever(zombieAnimation))//animation
+        //stop animation
+        
         //spawnEnemy()
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run() { [weak self] in self?.spawnEnemy()
         },SKAction.wait(forDuration: 2.0)]))) // periodic spawning
@@ -64,6 +66,7 @@ class GameScene: SKScene {
             if diff.length() <= zombieMovePointsPerSec * CGFloat(dt)
             {
                 velocity = CGPoint.zero
+                stopZombieAnimation()
             }
             else
             {
@@ -93,7 +96,8 @@ class GameScene: SKScene {
     
     //subtract the zombie position from the tap position, you get a vector showing the offset amount
     func moveZombieToward(location: CGPoint) {
-     let offset = CGPoint(x: location.x - zombie.position.x,y: location.y - zombie.position.y)
+     startZombieAnimation()
+        let offset = CGPoint(x: location.x - zombie.position.x,y: location.y - zombie.position.y)
         let length = sqrt(Double(offset.x * offset.x + offset.y * offset.y))
         //length of the hypotenuse using pythogoras theorem
         let direction = CGPoint(x: offset.x / CGFloat(length),y: offset.y / CGFloat(length))
@@ -246,6 +250,18 @@ class GameScene: SKScene {
      //enemy.run(actionMove)
         let actionRemove = SKAction.removeFromParent()
         enemy.run(SKAction.sequence([actionMove, actionRemove])) // remove from parent action
+    }
+    
+    //stop animation
+    func startZombieAnimation() {
+     if zombie.action(forKey: "animation") == nil {
+     zombie.run(
+     SKAction.repeatForever(zombieAnimation),
+     withKey: "animation")
+     }
+    }
+    func stopZombieAnimation() {
+     zombie.removeAction(forKey: "animation")
     }
     
 }
