@@ -210,7 +210,9 @@ class GameScene: SKScene {
         //let sequence = SKAction.sequence([actionMidMove, logMessage, wait, actionMove,reverseMove,logMessage, wait, reverseMid])
         //Reverse Action
         
-        enemy.run(sequence)
+        //enemy.run(sequence)
+        let repeatAction = SKAction.repeatForever(sequence) // Repeating Action
+        enemy.run(repeatAction)
     }
     
 }
