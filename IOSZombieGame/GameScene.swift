@@ -44,6 +44,11 @@ class GameScene: SKScene {
         //spawnEnemy()
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run() { [weak self] in self?.spawnEnemy()
         },SKAction.wait(forDuration: 2.0)]))) // periodic spawning
+        run(SKAction.repeatForever(
+        SKAction.sequence([SKAction.run() { [weak self] in
+        self?.spawnCat()
+        },
+        SKAction.wait(forDuration: 1.0)]))) // spawn cat //scale action
         debugDrawPlayableArea()
     }
     
@@ -264,4 +269,22 @@ class GameScene: SKScene {
      zombie.removeAction(forKey: "animation")
     }
     
+    func spawnCat() {
+     // 1
+     let cat = SKSpriteNode(imageNamed: "cat")
+     cat.position = CGPoint(
+     x: CGFloat.random(min: playableRect.minX,
+     max: playableRect.maxX),
+     y: CGFloat.random(min: playableRect.minY,
+     max: playableRect.maxY))
+     cat.setScale(0)
+     addChild(cat)
+     // 2
+     let appear = SKAction.scale(to: 1.0, duration: 0.5)
+     let wait = SKAction.wait(forDuration: 10.0)
+     let disappear = SKAction.scale(to: 0, duration: 0.5)
+     let removeFromParent = SKAction.removeFromParent()
+     let actions = [appear, wait, disappear, removeFromParent]
+     cat.run(SKAction.sequence(actions))
+    }
 }
