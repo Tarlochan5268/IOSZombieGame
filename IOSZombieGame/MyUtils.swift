@@ -88,3 +88,13 @@ extension CGFloat {
  return self >= 0.0 ? 1.0 : -1.0
  }
 }
+
+extension CGFloat {
+ static func random() -> CGFloat {
+ return CGFloat(Float(arc4random()) / Float(UInt32.max)) //gives a random number between 0 and 1
+ }
+ static func random(min: CGFloat, max: CGFloat) -> CGFloat {
+ assert(min < max)
+ return CGFloat.random() * (max - min) + min //gives a random number between specified minimum and maximum values
+ }
+}
