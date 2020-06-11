@@ -186,13 +186,13 @@ class GameScene: SKScene {
          //to: CGPoint(x: -enemy.size.width/2, y: enemy.position.y),
          //duration: 2.0)
         //enemy.run(actionMove)
-        let actionMidMove = SKAction.move(
-         to: CGPoint(x: size.width/2,
-         y: playableRect.minY + enemy.size.height/2),
+        let actionMidMove = SKAction.moveBy(
+         x: -size.width/2-enemy.size.width/2,
+         y: -playableRect.height/2 + enemy.size.height/2,
          duration: 1.0)
-        // 2
-        let actionMove = SKAction.move(
-         to: CGPoint(x: -enemy.size.width/2, y: enemy.position.y),
+        let actionMove = SKAction.moveBy(
+         x: -size.width/2-enemy.size.width/2,
+         y: playableRect.height/2 - enemy.size.height/2,
          duration: 1.0)
         // 3
         let wait = SKAction.wait(forDuration: 0.25)
@@ -200,7 +200,16 @@ class GameScene: SKScene {
         let logMessage = SKAction.run() {
          print("Reached bottom!")
         }
-        let sequence = SKAction.sequence([actionMidMove, logMessage, wait, actionMove]) //Run Block aCTION
+        //let sequence = SKAction.sequence([actionMidMove, logMessage, wait, actionMove]) //Run Block aCTION
+        //let reverseMid = actionMidMove.reversed()
+        //let reverseMove = actionMove.reversed()
+        let halfSequence = SKAction.sequence(
+         [actionMidMove, logMessage, wait, actionMove])
+        let sequence = SKAction.sequence(
+         [halfSequence, halfSequence.reversed()])
+        //let sequence = SKAction.sequence([actionMidMove, logMessage, wait, actionMove,reverseMove,logMessage, wait, reverseMid])
+        //Reverse Action
+        
         enemy.run(sequence)
     }
     
