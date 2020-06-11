@@ -37,6 +37,7 @@ class GameScene: SKScene {
         zombie.position = CGPoint(x:400,y:400)
         //zombie.setScale(2)
         addChild(zombie)
+        spawnEnemy()
         debugDrawPlayableArea()
     }
     
@@ -175,4 +176,16 @@ class GameScene: SKScene {
         let amountToRotate = min(rotateRadiansPerSec*CGFloat(dt),abs(shortest))
         sprite.zRotation += shortest.sign() * amountToRotate
     }
+    
+    func spawnEnemy() {
+     let enemy = SKSpriteNode(imageNamed: "enemy")
+     enemy.position = CGPoint(x: size.width + enemy.size.width/2,
+     y: size.height/2)
+     addChild(enemy)
+        let actionMove = SKAction.move(
+         to: CGPoint(x: -enemy.size.width/2, y: enemy.position.y),
+         duration: 2.0)
+        enemy.run(actionMove)
+    }
+    
 }
