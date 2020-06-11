@@ -195,7 +195,9 @@ class GameScene: SKScene {
          to: CGPoint(x: -enemy.size.width/2, y: enemy.position.y),
          duration: 1.0)
         // 3
-        let sequence = SKAction.sequence([actionMidMove, actionMove])
+        let wait = SKAction.wait(forDuration: 0.25)
+        let sequence = SKAction.sequence(
+         [actionMidMove, wait, actionMove]) // makes the sprite wait
         // 4
         enemy.run(sequence)
     }
