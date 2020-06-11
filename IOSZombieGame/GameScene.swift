@@ -41,7 +41,7 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        zombie.position = CGPoint(x: zombie.position.x+8, y: zombie.position.y)
+        //zombie.position = CGPoint(x: zombie.position.x+8, y: zombie.position.y)
         //if((lastTouchLocation - zombie.position) <= zombieMovePointsPerSec*dt )
         
         
