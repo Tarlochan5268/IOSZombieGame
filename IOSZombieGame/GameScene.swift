@@ -18,6 +18,7 @@ class GameScene: SKScene {
     var velocity = CGPoint.zero
     let playableRect: CGRect
     var lastTouchLocation : CGPoint? //@
+    let zombieAnimation: SKAction
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
@@ -37,6 +38,7 @@ class GameScene: SKScene {
         zombie.position = CGPoint(x:400,y:400)
         //zombie.setScale(2)
         addChild(zombie)
+        zombie.run(SKAction.repeatForever(zombieAnimation))//animation
         //spawnEnemy()
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run() { [weak self] in self?.spawnEnemy()
         },SKAction.wait(forDuration: 2.0)]))) // periodic spawning
@@ -151,6 +153,19 @@ class GameScene: SKScene {
      let playableMargin = (size.height-playableHeight)/2.0 // 3
      playableRect = CGRect(x: 0, y: playableMargin,width: size.width,height: playableHeight)//4
     //self.lastTouchLocation = CGPoint.init() //@
+        //animation code
+        var textures:[SKTexture] = []
+        // 2
+        for i in 1...4 {
+         textures.append(SKTexture(imageNamed: "zombie\(i)"))
+        }
+        // 3
+        textures.append(textures[2])
+        textures.append(textures[1])
+        // 4
+        zombieAnimation = SKAction.animate(with: textures,
+         timePerFrame: 0.1)
+        
     super.init(size: size) // 5
     }
     
