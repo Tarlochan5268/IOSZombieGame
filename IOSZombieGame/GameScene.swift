@@ -58,7 +58,7 @@ class GameScene: SKScene {
         self?.spawnCat()
         },
         SKAction.wait(forDuration: 1.0)]))) // spawn cat //scale action
-        debugDrawPlayableArea()
+        //debugDrawPlayableArea()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -97,6 +97,13 @@ class GameScene: SKScene {
         if lives <= 0 && !gameOver {
          gameOver = true
          print("You lose!")
+            // 1
+            let gameOverScene = GameOverScene(size: size, won: false)
+            gameOverScene.scaleMode = scaleMode
+            // 2
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            // 3
+            view?.presentScene(gameOverScene, transition: reveal)
         }
         
     }
@@ -413,6 +420,12 @@ class GameScene: SKScene {
         if trainCount >= 15 && !gameOver {
          gameOver = true
          print("You win!")
+            let gameOverScene = GameOverScene(size: size, won: true)
+            gameOverScene.scaleMode = scaleMode
+            // 2
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            // 3
+            view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
