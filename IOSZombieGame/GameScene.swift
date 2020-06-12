@@ -82,7 +82,7 @@ class GameScene: SKScene {
         //move(sprite: zombie, velocity: velocity)
         boundsCheckZombie()
         //rotate(sprite: zombie, direction: velocity)
-        checkCollisions()
+        //checkCollisions()
         
     }
     
@@ -91,7 +91,7 @@ class GameScene: SKScene {
         //Velocity is in points per second
          let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
          y: velocity.y * CGFloat(dt))
-         print("Amount to move: \(amountToMove)")
+         //print("Amount to move: \(amountToMove)")
          // 2
          //sprite.position = CGPoint(
          //x: sprite.position.x + amountToMove.x,
@@ -331,5 +331,9 @@ class GameScene: SKScene {
      for enemy in hitEnemies {
      zombieHit(enemy: enemy)
      }
+    }
+    
+    override func didEvaluateActions() {
+     checkCollisions()
     }
 }
