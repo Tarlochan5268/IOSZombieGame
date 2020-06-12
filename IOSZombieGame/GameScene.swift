@@ -19,6 +19,8 @@ class GameScene: SKScene {
     var invincible = false
     let catMovePointsPerSec:CGFloat = 480.0
     let playableRect: CGRect
+    var lives = 5
+    var gameOver = false
     var lastTouchLocation : CGPoint? //@
     let zombieAnimation: SKAction
     let catCollisionSound: SKAction = SKAction.playSoundFileNamed(
@@ -92,6 +94,10 @@ class GameScene: SKScene {
 
         //rotate(sprite: zombie, direction: velocity)
         //checkCollisions()
+        if lives <= 0 && !gameOver {
+         gameOver = true
+         print("You lose!")
+        }
         
     }
     
@@ -347,6 +353,8 @@ class GameScene: SKScene {
        zombie.run(SKAction.sequence([blinkAction, setHidden]))
        
        run(enemyCollisionSound)
+        loseCats()
+        lives -= 1
      }
     
     func checkCollisions() {
@@ -386,9 +394,11 @@ class GameScene: SKScene {
     }
     
     func moveTrain() {
+        var trainCount = 0
       var targetPosition = zombie.position
       
       enumerateChildNodes(withName: "train") { node, stop in
+        trainCount += 1
         if !node.hasActions() {
           let actionDuration = 0.3
           let offset = targetPosition - node.position
@@ -400,5 +410,36 @@ class GameScene: SKScene {
         }
         targetPosition = node.position
       }
+        if trainCount >= 15 && !gameOver {
+         gameOver = true
+         print("You win!")
+        }
+    }
+    
+    func loseCats() {
+    // 1
+        var loseCount = 0
+        enumerateChildNodes(withName: "train") { node, stop in
+        // 2
+        var randomSpot = node.position
+        randomSpot.x += CGFloat.random(min: -100, max: 100)
+        randomSpot.y += CGFloat.random(min: -100, max: 100)
+        // 3
+        node.name = ""
+        node.run(
+        SKAction.sequence([
+        SKAction.group([
+        SKAction.rotate(byAngle: π*4, duration: 1.0),
+        SKAction.move(to: randomSpot, duration: 1.0),
+        SKAction.scale(to: 0, duration: 1.0)
+        ]),
+        SKAction.removeFromParent()
+        ]))
+        // 4
+        loseCount += 1
+        if loseCount >= 2 {
+        stop[0] = true
+        }
+        }
     }
 }

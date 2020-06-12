@@ -19,6 +19,7 @@
 		84A6B7A12493AE6A00F28EF9 /* hitCat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A6B79C2493AE6A00F28EF9 /* hitCat.wav */; };
 		84A6B7A22493AE6A00F28EF9 /* hitCatLady.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84A6B79D2493AE6A00F28EF9 /* hitCatLady.wav */; };
 		84A6B7A32493AE6A00F28EF9 /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 84A6B79E2493AE6A00F28EF9 /* backgroundMusic.mp3 */; };
+		84A6B7A52494385700F28EF9 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6B7A42494385700F28EF9 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		84A6B79C2493AE6A00F28EF9 /* hitCat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hitCat.wav; sourceTree = "<group>"; };
 		84A6B79D2493AE6A00F28EF9 /* hitCatLady.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hitCatLady.wav; sourceTree = "<group>"; };
 		84A6B79E2493AE6A00F28EF9 /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
+		84A6B7A42494385700F28EF9 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				845D711B2490BD6700123AF4 /* LaunchScreen.storyboard */,
 				845D711E2490BD6700123AF4 /* Info.plist */,
 				84A6B79724919E0C00F28EF9 /* MyUtils.swift */,
+				84A6B7A42494385700F28EF9 /* GameOverScene.swift */,
 			);
 			path = IOSZombieGame;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A6B7A52494385700F28EF9 /* GameOverScene.swift in Sources */,
 				845D71132490BD6500123AF4 /* GameScene.swift in Sources */,
 				845D71152490BD6500123AF4 /* GameViewController.swift in Sources */,
 				845D710D2490BD6500123AF4 /* AppDelegate.swift in Sources */,
