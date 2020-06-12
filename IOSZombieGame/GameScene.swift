@@ -407,8 +407,9 @@ class GameScene: SKScene {
       var targetPosition = zombie.position
       
       enumerateChildNodes(withName: "train") { node, stop in
-        trainCount += 1
+        
         if !node.hasActions() {
+            trainCount += 1
           let actionDuration = 0.3
           let offset = targetPosition - node.position
           let direction = offset.normalized()
