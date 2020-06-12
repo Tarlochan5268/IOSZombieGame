@@ -325,6 +325,7 @@ class GameScene: SKScene {
         run(catCollisionSound)
         //run(SKAction.playSoundFileNamed("hitCat.wav",waitForCompletion: false))
      }
+        
 
      var hitEnemies: [SKSpriteNode] = []
      enumerateChildNodes(withName: "enemy") { node, _ in
