@@ -29,6 +29,7 @@ class GameScene: SKScene {
      "hitCatLady.wav", waitForCompletion: false)
     
     override func didMove(to view: SKView) {
+        playBackgroundMusic(filename: "backgroundMusic.mp3")
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
         background.zPosition = -1 //SpriteKit will draw it before anything else you add to the scene,
@@ -97,6 +98,7 @@ class GameScene: SKScene {
         if lives <= 0 && !gameOver {
          gameOver = true
          print("You lose!")
+            backgroundMusicPlayer.stop()
             // 1
             let gameOverScene = GameOverScene(size: size, won: false)
             gameOverScene.scaleMode = scaleMode
@@ -420,6 +422,7 @@ class GameScene: SKScene {
         if trainCount >= 15 && !gameOver {
          gameOver = true
          print("You win!")
+            backgroundMusicPlayer.stop()
             let gameOverScene = GameOverScene(size: size, won: true)
             gameOverScene.scaleMode = scaleMode
             // 2
