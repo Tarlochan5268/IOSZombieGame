@@ -318,6 +318,8 @@ class GameScene: SKScene {
      }
      for cat in hitCats {
      zombieHit(cat: cat)
+        run(SKAction.playSoundFileNamed("hitCat.wav",
+        waitForCompletion: false))
      }
 
      var hitEnemies: [SKSpriteNode] = []
@@ -330,6 +332,8 @@ class GameScene: SKScene {
      }
      for enemy in hitEnemies {
      zombieHit(enemy: enemy)
+        run(SKAction.playSoundFileNamed("hitCatLady.wav",
+        waitForCompletion: false)) 
      }
     }
     
