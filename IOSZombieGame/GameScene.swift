@@ -19,6 +19,10 @@ class GameScene: SKScene {
     let playableRect: CGRect
     var lastTouchLocation : CGPoint? //@
     let zombieAnimation: SKAction
+    let catCollisionSound: SKAction = SKAction.playSoundFileNamed(
+     "hitCat.wav", waitForCompletion: false)
+    let enemyCollisionSound: SKAction = SKAction.playSoundFileNamed(
+     "hitCatLady.wav", waitForCompletion: false)
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
@@ -318,8 +322,8 @@ class GameScene: SKScene {
      }
      for cat in hitCats {
      zombieHit(cat: cat)
-        run(SKAction.playSoundFileNamed("hitCat.wav",
-        waitForCompletion: false))
+        run(catCollisionSound)
+        //run(SKAction.playSoundFileNamed("hitCat.wav",waitForCompletion: false))
      }
 
      var hitEnemies: [SKSpriteNode] = []
@@ -332,8 +336,8 @@ class GameScene: SKScene {
      }
      for enemy in hitEnemies {
      zombieHit(enemy: enemy)
-        run(SKAction.playSoundFileNamed("hitCatLady.wav",
-        waitForCompletion: false)) 
+        run(enemyCollisionSound)
+        //run(SKAction.playSoundFileNamed("hitCatLady.wav",waitForCompletion: false))
      }
     }
     
