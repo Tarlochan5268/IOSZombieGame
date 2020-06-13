@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var lastUpdateTime: TimeInterval = 0
     let zombieRotateRadiansPerSec:CGFloat = 4.0 * π
     var dt: TimeInterval = 0
+    let cameraNode = SKCameraNode()
     let zombieMovePointsPerSec: CGFloat = 480.0
     var velocity = CGPoint.zero
     var invincible = false
@@ -60,6 +61,9 @@ class GameScene: SKScene {
         },
         SKAction.wait(forDuration: 1.0)]))) // spawn cat //scale action
         //debugDrawPlayableArea()
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: size.width/2, y: size.height/2)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -107,6 +111,7 @@ class GameScene: SKScene {
             // 3
             view?.presentScene(gameOverScene, transition: reveal)
         }
+        //cameraNode.position = zombie.position
         
     }
     
