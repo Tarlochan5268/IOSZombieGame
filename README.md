@@ -12,12 +12,15 @@ This Project Wiki Link https://github.com/Tarlochan5268/IOSZombieGame/wiki
 - You Lose if hit by lady many times
 
 # Screenshots:
+<br>
 <img
 src="Screenshots/gameplay.gif"
 raw=true
-width="20%"
-height = "10%"
+width="50%"
+height = "40%"
 /> 
+<br>
+<br>
 <img
 src="Screenshots/TitleScreen.png"
 raw=true
