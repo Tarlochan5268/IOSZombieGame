@@ -15,9 +15,10 @@ class GameScene: SKScene {
   var lastUpdateTime: TimeInterval = 0
   var dt: TimeInterval = 0
   let zombieMovePointsPerSec: CGFloat = 480.0
+    var lastTouchLocation: CGPoint?
   var velocity = CGPoint.zero
   let playableRect: CGRect
-  var lastTouchLocation: CGPoint?
+  
   let zombieRotateRadiansPerSec:CGFloat = 4.0 * π
   let zombieAnimation: SKAction
   let catCollisionSound: SKAction = SKAction.playSoundFileNamed(
